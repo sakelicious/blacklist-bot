@@ -13,7 +13,7 @@ app.listen(port, () => {
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const { Client, Collection, GatewayIntentBits, REST, Routes } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, REST, Routes, ActivityType } = require('discord.js');
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds]
@@ -44,6 +44,24 @@ for (const file of commandFiles) {
 
 client.once('ready', async () => {
     console.log(`✅ Bot online: ${client.user.tag}`);
+
+    // --- SISTEM DE STATUS DINAMIC (ALTERNEAZĂ PROPOZIȚIILE) ---
+    const statuses = [
+        'pentru blacklist folosește /blacklist',
+        'made by sake.'
+    ];
+    
+    let index = 0;
+    
+    // Setează primul status imediat ce pornește botul
+    client.user.setActivity(statuses[index], { type: ActivityType.Playing });
+    
+    // Schimbă statusul automat la fiecare 10 secunde
+    setInterval(() => {
+        index = (index + 1) % statuses.length;
+        client.user.setActivity(statuses[index], { type: ActivityType.Playing });
+    }, 10000); // 10000 milisecunde = 10 secunde
+    // ---------------------------------------------------------
 
     // Înregistrare automată a comenzilor de tip Slash în Discord API
     const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
