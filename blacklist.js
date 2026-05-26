@@ -5,9 +5,9 @@ module.exports = {
         .setName('blacklist')
         .setDescription('Verifică sau adaugă un utilizator pe blacklist.'),
     async execute(interaction) {
-        // Răspundem imediat ca Discord să nu mai dea eroarea cu "did not respond"
+        // Trimitem un răspuns imediat ca Discord să vadă că botul e activ
         await interaction.reply({ 
-            content: '✅ Comanda /blacklist funcționează corect pe server!', 
+            content: '✅ Comanda /blacklist funcționează perfect!', 
             ephemeral: false 
         });
     },
