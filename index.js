@@ -47,7 +47,7 @@ client.once('ready', async () => {
 
     // --- SISTEM DE STATUS DINAMIC (ALTERNEAZĂ PROPOZIȚIILE) ---
     const statuses = [
-        'pentru blacklist folosește /blacklist',
+        '/blacklist',
         'made by sake.'
     ];
     
