@@ -13,7 +13,7 @@ app.listen(port, () => {
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, REST, Routes } = require('discord.js');
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds]
@@ -42,8 +42,27 @@ for (const file of commandFiles) {
     }
 }
 
-client.once('ready', () => {
+client.once('ready', async () => {
     console.log(`✅ Bot online: ${client.user.tag}`);
+
+    // Înregistrare automată a comenzilor de tip Slash în Discord API
+    const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
+    const commandsData = [];
+    
+    client.commands.forEach(command => {
+        commandsData.push(command.data.toJSON());
+    });
+
+    try {
+        console.log('🔄 Se încarcă comenzile de tip Slash în Discord...');
+        await rest.put(
+            Routes.applicationCommands(client.user.id),
+            { body: commandsData }
+        );
+        console.log('🚀 Toate comenzile au fost înregistrate cu succes în Discord!');
+    } catch (error) {
+        console.error('❌ Eroare la înregistrarea comenzilor:', error);
+    }
 });
 
 client.on('interactionCreate', async interaction => {
