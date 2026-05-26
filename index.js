@@ -1,3 +1,15 @@
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Botul este online!');
+});
+
+app.listen(port, () => {
+  console.log(`Serverul web rulează pe portul ${port}`);
+});
+
 require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
