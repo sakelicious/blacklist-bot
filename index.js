@@ -48,7 +48,6 @@ client.once('ready', async () => {
     // --- SISTEM DE STATUS DINAMIC (ALTERNEAZĂ PROPOZIȚIILE) ---
     const statuses = [
         '/blacklist',
-        'made by sake.'
     ];
     
     let index = 0;
